@@ -1,0 +1,123 @@
+%%%% CAPÍTULO 3 - MATERIAL E MÉTODOS (PODE SER OUTRO TÍTULO DE ACORDO COM O TRABALHO REALIZADO)
+
+\chapter{Materiais}\label{cap:materialemetodos}
+
+Para a realização deste trabalho, foram selecionadas três ferramentas de integração e entrega contínua: 
+\hyperref[section:Github]{Github Actions}{\textsuperscript{\ref{section:Github}}}, 
+\hyperref[section:Gitlab]{Gitlab CI/CD}{\textsuperscript{\ref{section:Gitlab}}} e \hyperref[section:Jenkins]{Jenkins}{\textsuperscript{\ref{section:Jenkins}}}. Essas plataformas foram escolhidas por sua ampla adoção na indústria de software e pelas diferentes abordagens que oferecem para a automação de pipelines.
+
+Além das ferramentas de CI/CD, foram utilizados outros materiais essenciais para garantir a criação de um ambiente de testes controlado e a execução das pipelines de maneira padronizada. A seguir, são descritos os principais componentes empregados neste estudo, com foco em suas funções e características mais relevantes para a análise comparativa.
+
+\section{Tecnologias de Apoio ao Projeto}
+
+\begin{itemize}
+    \item \textbf{Git}: Sistema de controle de versão utilizado para o gerenciamento do código-fonte do projeto. Permitiu rastrear alterações, colaborar com diferentes plataformas e acionar pipelines de CI/CD por meio de \textit{pull requests}.
+
+    \item \textbf{Projeto Base (.NET)}: As pipelines foram aplicadas sobre um projeto desenvolvido com a tecnologia .NET, escolhida por sua ampla adoção no desenvolvimento de aplicações corporativas. O projeto inclui testes automatizados com o framework xUnit, garantindo a validação contínua da lógica da aplicação durante a execução das pipelines.
+
+    \item \textbf{.NET CLI e NuGet}: A interface de linha de comando do .NET foi utilizada nas etapas de compilação, execução de testes e publicação. O NuGet atuou como gerenciador de pacotes para restaurar as dependências do projeto nas etapas iniciais da automação.
+
+    \item \textbf{Shell Script}: Utilizado para automatizar tarefas recorrentes dentro do ambiente de execução das pipelines, como configurações de ambiente e chamadas de comandos auxiliares.
+
+    \item \textbf{YAML}: Linguagem de marcação empregada na definição das pipelines nas três plataformas analisadas. Sua estrutura declarativa e sintaxe simplificada facilitaram a criação, manutenção e leitura dos fluxos de automação.
+
+    \item \textbf{Docker e Docker Hub}: O Docker foi utilizado para a criação de imagens containerizadas do projeto. As imagens geradas foram publicadas automaticamente no Docker Hub, promovendo o versionamento e a distribuição eficiente das aplicações.
+
+    \item \textbf{Trivy}: Ferramenta de análise de segurança utilizada para escanear as imagens Docker em busca de vulnerabilidades conhecidas. Sua integração às pipelines permitiu verificar possíveis falhas antes da publicação das imagens no repositório, elevando o nível de segurança no processo de entrega contínua.
+\end{itemize}
+
+\chapter{Métodos}\label{cap:metodos}
+
+Este capítulo descreve os procedimentos adotados para a execução da análise comparativa entre as ferramentas de integração e entrega contínua: GitHub Actions, GitLab CI/CD e Jenkins. As etapas metodológicas foram estruturadas com o objetivo de garantir a padronização dos testes e a reprodutibilidade dos resultados em um ambiente controlado. Inicialmente, foi realizada uma análise funcional preliminar das ferramentas, com o intuito de comparar seus recursos nativos e capacidades de integração, antes da execução prática das pipelines.
+
+\section{Análise Funcional Preliminar}
+
+Antes da execução prática dos experimentos com as pipelines, foi realizada uma análise funcional preliminar das ferramentas selecionadas. Essa análise teve como objetivo identificar e comparar os principais recursos nativos de cada plataforma de CI/CD, com foco em aspectos que impactam diretamente sua adoção e flexibilidade.
+
+Os critérios considerados nessa etapa incluíram:
+
+\begin{itemize}
+    \item \textbf{Integração com repositórios Git externos}: Verificação da compatibilidade com provedores Git como GitHub, GitLab e Bitbucket.
+    
+    \item \textbf{Suporte a ferramentas externas dentro da pipeline}: Capacidade de integrar ações ou \textit{scripts} de terceiros, como ferramentas de análise de código, notificações, ou escaneamento de segurança.
+    
+    \item \textbf{Suporte a \textit{runners} externos}: Verificação da possibilidade de configurar agentes de execução personalizados para as pipelines.
+    
+    \item \textbf{Disponibilidade em modelo \textit{SaaS (Software as a Service)}}: Identificação de quais plataformas oferecem execução totalmente hospedada na nuvem ou que exigem instalação local.
+
+    \item \textbf{Suporte a execução \textit{self-hosted}}: Verificação da possibilidade de executar a ferramenta em ambientes locais, por meio de instalação em servidores próprios ou \textit{containers}, permitindo maior controle sobre a infraestrutura e personalização do ambiente de execução.
+    
+    \item \textbf{Complexidade da configuração inicial}: Avaliação da quantidade de etapas necessárias para configurar a primeira \textit{pipeline} funcional.
+    
+    \item \textbf{Suporte a múltiplos ambientes}: Verificação da capacidade da ferramenta de gerenciar \textit{pipelines} com múltiplos estágios (ex.: desenvolvimento, homologação, produção).
+    
+    \item \textbf{\textit{Marketplace} ou biblioteca de \textit{templates/actions}}: Disponibilidade de um repositório público de exemplos, templates ou ações reutilizáveis para acelerar a construção das \textit{pipelines}.
+    
+    \item \textbf{Interface de usuário \textit{(UI)} para visualização da \textit{pipeline}}: Existência e qualidade da interface gráfica para monitorar, depurar e controlar a execução das etapas da \textit{pipeline}.
+    
+    \item \textbf{Suporte à paralelização de \textit{jobs}}: Capacidade de executar múltiplos \textit{jobs} simultaneamente, otimizando o tempo total de execução das pipelines.
+    
+    \item \textbf{Suporte a cache de dependências}: Verificação da possibilidade de armazenar artefatos ou dependências entre execuções, reduzindo o tempo dos builds subsequentes.
+    
+    \item \textbf{Integração com notificações e alertas}: Facilidade de configurar alertas em canais como e-mail, Slack, MS Teams ou outros serviços externos.
+\end{itemize}
+
+Essa análise funcional forneceu uma visão comparativa inicial sobre a flexibilidade, extensibilidade e facilidade de adoção de cada ferramenta, complementando os resultados obtidos posteriormente nos testes práticos com as \textit{pipelines}.
+
+\section{Estrutura do Estudo}
+
+A metodologia adotada consistiu na implementação de \textit{pipelines} semelhantes nas três plataformas de CI/CD selecionadas. Cada \textit{pipeline} foi estruturada para executar as mesmas etapas, assegurando condições equivalentes de comparação entre as ferramentas. As etapas padronizadas contemplaram a restauração das dependências do projeto, a compilação do código-fonte, a execução de testes automatizados utilizando o framework xUnit, a criação da imagem Docker da aplicação e, por fim, a publicação dessa imagem no Docker Hub.
+
+\section{Procedimento de Implementação}
+
+Para garantir equidade na comparação, todas as pipelines foram aplicadas sobre o mesmo projeto base, desenvolvido com a tecnologia .NET. As etapas implementadas em cada ferramenta seguiram o seguinte fluxo:
+
+\begin{enumerate}
+    \item \textbf{Restaurar dependências}: Utilização do \textit{dotnet restore} para baixar os pacotes via NuGet.
+    \item \textbf{Compilar o projeto}: Execução de \textit{dotnet build} para validar a integridade do código.
+    \item \textbf{Executar testes}: Execução dos testes automatizados com \textit{dotnet test}, utilizando o framework xUnit.
+    \item \textbf{Gerar imagem Docker}: Utilização do Docker CLI para construir a imagem da aplicação.
+    \item \textbf{Verificar vulnerabilidades}: Escaneamento da imagem Docker gerada com a ferramenta Trivy antes do envio ao Docker Hub.
+    \item \textbf{Publicar no Docker Hub}: Autenticação e envio da imagem para um repositório privado, utilizando credenciais armazenadas como variáveis de ambiente seguras em cada plataforma.
+\end{enumerate}
+
+Todas as tarefas foram definidas por arquivos YAML nas plataformas GitHub Actions e GitLab CI/CD, e em Groovy (Pipeline Script) no Jenkins.
+
+\section{Ambiente de Execução}
+
+As execuções das pipelines foram realizadas em ambientes controlados, visando garantir a padronização das condições e possibilitar uma comparação justa e precisa entre as ferramentas avaliadas. Cada ferramenta teve seu ambiente configurado da seguinte forma:
+
+\begin{itemize}
+    \item \textbf{Jenkins:} Executado localmente em um container Docker, com uma configuração dedicada de 4 GB de RAM e 2 vCPUs, garantindo estabilidade e recursos suficientes durante os testes.
+    
+    \item \textbf{GitHub Actions:} Utilizado diretamente no ambiente SaaS fornecido pelo GitHub, com GitHub-hosted runners e ambiente padrão \texttt{ubuntu-latest}.
+    
+    \item \textbf{GitLab CI/CD:} Executado diretamente na infraestrutura \textit{SaaS} fornecida pelo GitLab, utilizando os GitLab Shared Runners com ambiente padrão disponibilizado pela plataforma.
+\end{itemize}
+
+Cada pipeline foi executada múltiplas vezes para assegurar a estabilidade dos resultados, minimizar possíveis variações de desempenho e identificar falhas pontuais que pudessem interferir na análise comparativa.
+
+\section{Critérios de Avaliação}
+
+As ferramentas foram avaliadas com base nos seguintes critérios:
+
+
+\begin{itemize}
+    \item \textbf{Tempo de desenvolvimento inicial}: Tempo real medido desde o início da configuração até a primeira execução bem-sucedida da pipeline, refletindo a praticidade e curva de aprendizado necessária.
+
+    \item \textbf{Tempo médio de execução das pipelines}: Tempo médio aferido após múltiplas execuções completas de todas as etapas padronizadas, indicando eficiência de performance.
+
+    \item \textbf{Facilidade de gerenciamento durante execução}: Avaliação qualitativa da praticidade para monitorar, depurar erros e interagir com as pipelines durante a execução por meio das interfaces das ferramentas.
+
+    \item \textbf{Estabilidade e consistência das execuções}: Verificação da frequência e natureza de eventuais falhas ou erros ocorridos durante múltiplas execuções repetidas.
+
+    \item \textbf{Eficiência no gerenciamento de variáveis e segredos}: Avaliação da praticidade e segurança das plataformas durante o uso efetivo de variáveis e credenciais sensíveis nas execuções reais.
+
+    \item \textbf{Eficácia nas integrações práticas}: Avaliação da capacidade real das plataformas de se integrarem, durante as execuções das pipelines, com ferramentas externas específicas como o Trivy para análise de segurança.
+\end{itemize}
+
+\section{Tratamento dos Dados}
+
+Os dados coletados durante as execuções — incluindo tempo total gasto na execução das pipelines, registros detalhados de erros (\textit{logs}), feedback gerado pelas ferramentas e esforço necessário para configuração inicial — foram organizados em tabelas comparativas para facilitar a análise. A avaliação dos resultados seguiu uma abordagem qualitativa e quantitativa, proporcionando uma compreensão abrangente e equilibrada das vantagens, limitações e diferenças práticas entre as plataformas estudadas.
+
+

@@ -1,0 +1,56 @@
+%%%% CAPÍTULO 1 - INTRODUÇÃO
+%%
+%% Deve apresentar uma visão global da pesquisa, incluindo: breve histórico, importância e justificativa da escolha do tema,
+%% delimitações do assunto, formulação de hipóteses e objetivos da pesquisa e estrutura do trabalho.
+
+%% Título e rótulo de capítulo (rótulos não devem conter caracteres especiais, acentuados ou cedilha)
+\chapter{Introdução}\label{cap:introducao}
+
+A automação de processos no desenvolvimento de software, através de ferramentas de integração e entrega contínua (CI/CD), é uma prática essencial no contexto de \hyperref[sec:devops]{\textit{DevOps}\textsuperscript{\ref{sec:devops}}} e desenvolvimento ágil, facilitando a entrega rápida e confiável de software. À medida que a complexidade dos projetos aumenta, ferramentas como GitHub Actions\footnote{https://github.com/}, GitLab CI/CD\footnote{https://about.gitlab.com/}e Jenkins\footnote{https://www.jenkins.io/} surgem como soluções importantes para automatizar processos e garantir qualidade e eficiência no ciclo de desenvolvimento.
+
+No contexto de \textit{DevOps}, a automação desses processos é fundamental para garantir a integração eficaz entre desenvolvimento e operações, promovendo maior colaboração entre as equipes e reduzindo o tempo necessário para a entrega de novas funcionalidades. Além disso, o uso de \hyperref[sec:pipelines]{\textit{pipelines}\textsuperscript{\ref{sec:pipelines}}} de CI/CD permite estruturar e padronizar a execução de testes, \textit{builds}\footnote{Build (construção) é o processo de transformar código-fonte em um formato executável. Isso geralmente envolve compilação ou empacotamento de arquivos.} e \textit{deploys}\footnote{Deploy (implantação) é o processo de disponibilizar uma aplicação ou sistema em um ambiente de execução (como produção, homologação ou desenvolvimento) para que possa ser utilizado pelos usuários ou teste.}, garantindo um fluxo de trabalho mais confiável e eficiente \cite{AWS2024}.
+
+A CI consiste na prática de integrar alterações de código frequentemente em um repositório compartilhado, onde são automaticamente verificadas e testadas. Essa abordagem minimiza riscos ao detectar erros precocemente, garantindo maior estabilidade ao desenvolvimento por meio de validações constantes a cada \textit{commit}\footnote{Um commit representa uma unidade de alteração no código-fonte registrada no histórico de um repositório, geralmente acompanhada de uma mensagem descritiva.}. Dessa forma, eventuais falhas podem ser corrigidas rapidamente, evitando que problemas se propaguem para versões posteriores do \textit{software} \cite{Fowler2024}.
+
+Já a CD assegura que o \textit{software} esteja sempre em um estado pronto para implantação, permitindo lançamentos frequentes e previsíveis. Essa prática possibilita que as equipes otimizem continuamente seus produtos, identificando e resolvendo conflitos entre o código novo e o existente de maneira ágil. Com isso, a correção de erros torna-se mais rápida e frequente, reduzindo o tempo necessário para entregar novas funcionalidades e melhorando a experiência dos usuários \cite{RedHat2025}.
+
+A seleção das ferramentas Jenkins, GitLab CI/CD e GitHub Actions para este estudo é fundamentada em sua ampla adoção e relevância no cenário atual de desenvolvimento de software. Essas ferramentas são reconhecidas não apenas por sua popularidade e uso em projetos de diversos portes, mas também por possuírem documentação extensa e detalhada, o que facilita a implementação e a resolução de problemas. Além disso, todas oferecem planos gratuitos, tornando-se acessíveis para equipes que buscam iniciar ou aprimorar suas práticas de CI/CD sem custos iniciais. Segundo relatórios e pesquisas de mercado, como o \cite{JetbrainsSurvey}, essas três ferramentas estão entre as mais utilizadas para automação de pipelines de integração e entrega contínua. O Jenkins, uma ferramenta de código aberto consolidada, é reconhecido por sua flexibilidade e extenso ecossistema de plugins \cite{JenkinsDocumentation}. O GitLab CI/CD, por sua vez, se destaca por oferecer uma plataforma integrada de DevOps, unindo gestão de código, (CI/CD) e monitoramento em um único ambiente \cite{GetStartedWithGitLab}. Já o GitHub Actions, com sua integração nativa ao GitHub, permite a automação de fluxos de trabalho diretamente nos repositórios, facilitando a adoção por equipes que já utilizam a plataforma \cite{GitHubGettingStarted}. Além disso, oferece diversos \textit{templates}\footnote{https://docs.gitlab.com/development/cicd/templates/} que simplificam a criação de \textit{pipelines} \cite{GitHubTemplates}.
+
+\section{Considerações iniciais}\label{sec:consideracoesIniciais}
+
+CI e CD são práticas fundamentais no desenvolvimento de \textit{software} moderno, especialmente em ambientes que adotam metodologias ágeis e \textit{DevOps}. Essas práticas são implementadas por meio de \textit{pipelines} que automatizam a execução das etapas de compilação, testes, integração, revisão e implantação, permitindo um ciclo de desenvolvimento acelerado e com maior confiabilidade no processo de entrega de software \cite{Fowler2024}. De acordo com Humble e Farley \cite{Humble2010}, CI e CD são essenciais para reduzir o tempo entre o desenvolvimento de uma funcionalidade e sua disponibilização, além de mitigar os riscos de falhas em produção.
+
+Cada uma dessas plataformas apresenta suas características particulares, vantagens e desafios que podem impactar diretamente a eficiência de equipes de desenvolvimento. A escolha de uma ferramenta adequada pode afetar desde a facilidade de implementação das esteiras até a eficiência geral da equipe e do sistema \cite{GitlabHowToChoose}. Como afirmado por Duvall \cite{Duvall2007}, o sucesso na adoção de CI/CD depende não apenas da escolha das ferramentas, mas também da integração dessas com as práticas da equipe e do projeto.
+
+GitHub Actions e GitLab oferecem integração nativa com o controle de versão, o que proporciona uma experiência mais fluida para desenvolvedores que já utilizam essas ferramentas. Por exemplo, o GitHub Actions, integrado ao ecossistema do GitHub, permite automação de \textit{workflows}\footnote{Workflow ou fluxo de trabalho em desenvolvimento de software e CI/CD refere-se a uma sequência definida de etapas ou tarefas automatizadas que são executadas em uma ordem específica para atingir um objetivo, como compilar, testar e implantar código.} diretamente no repositório com \textit{templates} prontos e integrações de ferramentas de terceiros pelo GitHub Marketplace \footnote{https://github.com/marketplace} \cite{GitHubActionsOverview}, \cite{GetStartedWithGitLab}.  
+
+Jenkins, por outro lado, como uma ferramenta open-source altamente configurável, permite uma flexibilidade maior em termos de customização e uso de plugins \cite{JenkinsDocumentation}. Entretanto, essa flexibilidade vem acompanhada de uma complexidade maior de configuração e uma curva de aprendizado mais acentuada. Segundo \cite{RiunguKalliosaari2016}, ferramentas como Jenkins, apesar de seu potencial de flexibilidade, podem ser mais adequadas para equipes com maior maturidade técnica, sendo preferidas em cenários que exigem customizações específicas e fluxos de trabalho complexos.
+
+Neste cenário, existe uma demanda crescente por estudos que avaliem de forma comparativa essas plataformas de CI/CD, fornecendo diretrizes claras para diferentes contextos de uso \cite{Shahin2017}. Este trabalho insere-se nesse contexto ao realizar uma análise comparativa, considerando aspectos como facilidade de uso, complexidade de configuração e desempenho de execução dos pipelines.
+
+\section{Objetivos}\label{sec:objetivos}
+
+Os objetivos deste trabalho consistem em realizar uma análise comparativa entre as ferramentas de CI/CD: Jenkins, GitLab CI/CD e GitHub Actions. Os resultados alcançados visam auxiliar a comunidade acadêmica e equipes de desenvolvimento de software na escolha da ferramenta mais adequada para seus projetos.
+
+\subsection{Objetivo geral}\label{subsec:objetivoGeral}
+
+Avaliar e comparar as funcionalidades relacionadas à CI/CD das ferramentas: GitHub Actions, GitLab CI/CD e Jenkins.
+
+\subsection{Objetivos específicos}\label{subsec:objetivosEspecificos}
+
+• Identificar as principais características e limitações de cada ferramenta, comparando suas funcionalidades;
+
+• Oferecer recomendações práticas para a escolha da ferramenta mais adequada a diferentes contextos de desenvolvimento, baseadas nos resultados obtidos;
+
+• Avaliar a facilidade de configuração, utilizando um conjunto padronizado de tarefas, para comparar o tempo envolvido na criação das \textit{pipelines}.
+
+\section{Justificativa}\label{sec:justificativa}
+
+A justificativa para este trabalho reside na importância de coletar, analisar e fornecer informações comparativas das funcionalidades das ferramentas: Jenkins, GitLab CI/CD e GitHub Actions. Tal abordagem visa, eventualmente, auxiliar equipes de desenvolvimento de software no processo de escolha da solução mais adequada às suas necessidades. Diante da crescente complexidade dos projetos de \textit{software} modernos e da fundamentalidade das práticas de CI/CD para a automação de processos e o aumento da eficiência no ciclo de desenvolvimento de software \cite{Fowler2024}. Este estudo, portanto, busca contribuir para a otimização dos fluxos de trabalho e a melhoria contínua na entrega de software, preenchendo uma lacuna na pesquisa sobre qual ferramenta melhor se adapta a diferentes contextos.
+
+A escolha das plataformas GitHub, GitLab e Jenkins reflete a busca por soluções amplamente adotadas no mercado e bem documentadas, que atendem às necessidades de equipes com diferentes perfis e contextos e que oferecem planos gratuitos, segundo a pesquisa \cite{bluelightCo}.
+
+O estudo também pode contribuir para a literatura acadêmica e prática, auxiliando equipes de desenvolvimento e engenheiros de \textit{software} na escolha da ferramenta mais apropriada para suas necessidades específicas, contribuição importante para o mercado de trabalho, onde a adoção de práticas CI/CD é cada vez mais indispensável para a manutenção da qualidade do \textit{software} e do ciclo de entrega \cite{RiunguKalliosaari2016}.
+
+
+ 

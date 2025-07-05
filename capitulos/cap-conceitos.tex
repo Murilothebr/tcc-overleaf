@@ -1,0 +1,290 @@
+%%%% CAPÍTULO 2 - REVISÃO DA LITERATURA (OU REVISÃO BIBLIOGRÁFICA, ESTADO DA ARTE, ESTADO DO CONHECIMENTO)
+%%
+%% O autor deve registrar seu conhecimento sobre a literatura básica do assunto, discutindo e comentando a informação já publicada.
+%% A revisão deve ser apresentada, preferencialmente, em ordem cronológica e por blocos de assunto, procurando mostrar a evolução do tema.
+%% Título e rótulo de capítulo (rótulos não devem conter caracteres especiais, acentuados ou cedilha)
+\chapter{Referencial te\'orico}\label{cap:referencialTeorico}
+
+O referencial teórico deste trabalho se concentra em conceitos e práticas relacionadas a \textit{DevOps}, mais especificamente CI e CD, essenciais no desenvolvimento de \textit{software}. Para contextualizar o trabalho, este capítulo será dividido em seções que abordam as definições de CI e CD, as \textit{pipelines} de CI/CD e as ferramentas em foco (GitHub Actions, GitLab CI/CD e Jenkins), além de uma análise das práticas e benefícios associados a cada uma delas.
+
+\section{Desenvolvimento \textit{(Dev)} e Operações\textit{(Ops)}}\label{sec:devops}
+
+\textit{DevOps} é uma abordagem cultural, filosófica e técnica que busca integrar as equipes de desenvolvimento e operações, promovendo colaboração, automação e monitoramento contínuo em todas as etapas do desenvolvimento de \textit{software}, desde a codificação até a produção \cite{AWS2024}.
+
+De acordo com \cite{Bass2020}, essa abordagem visa melhorar a agilidade das organizações por meio da integração dos processos de desenvolvimento e operação, reduzindo o tempo entre a implementação de uma alteração e sua disponibilização ao usuário final. Além disso, essa prática está associada à melhoria da qualidade do \textit{software}, maior frequência de entrega e maior estabilidade nos ambientes de produção.
+
+Segundo \cite{RiunguKalliosaari2016}, os benefícios da adoção de \textit{DevOps} incluem maior eficiência no ciclo de vida do desenvolvimento, feedback mais rápido, melhor colaboração entre equipes e maior capacidade de resposta a mudanças. No entanto, os autores também destacam desafios, como a necessidade de mudança cultural, capacitação das equipes e adaptação de ferramentas e processos.
+
+O \textit{DevOps} serve como base para práticas como integração contínua e entrega contínua, permitindo que essas sejam implementadas de forma eficaz e integrada aos fluxos de trabalho modernos \cite{RedHat2025}.
+
+Historicamente, muitas organizações seguiram modelos tradicionais nos quais as equipes de desenvolvimento, testes e operações atuavam de forma isolada, com responsabilidades bem definidas e pouco diálogo entre os setores. Essa separação gerava diversos desafios, como a ausência de uma linguagem comum, dificuldade na troca de conhecimento e barreiras culturais que impactavam diretamente na eficiência e qualidade do \textit{software} entregue \cite{AWS2024}.
+
+A abordagem \textit{DevOps} surge como uma resposta a esse modelo fragmentado, propondo a quebra desses silos organizacionais e incentivando uma mentalidade colaborativa. Ao integrar desenvolvimento, testes e operações em um fluxo contínuo, é possível alinhar os objetivos das equipes e promover uma visão mais unificada do produto e do cliente.
+
+Com isso, práticas como automação de testes, entrega contínua e monitoramento em tempo real tornam-se viáveis e eficazes, reduzindo o tempo de entrega, aumentando a qualidade do \textit{software} e permitindo respostas mais ágeis a mudanças e incidentes. Além disso, a criação de uma linguagem compartilhada e a busca por objetivos comuns ajudam a fortalecer a cultura organizacional e a disseminação de conhecimento entre os times.
+
+Essa transformação, no entanto, exige mais do que apenas a adoção de ferramentas: requer uma mudança cultural profunda, onde valores como confiança, transparência e responsabilidade compartilhada passam a ser fundamentais no dia a dia das equipes.
+
+\section{O ciclo de vida \textit{DevOps}}
+
+O ciclo \textit{DevOps} é composto por diversas etapas que representam processos, ferramentas e práticas específicas. Quando integradas, essas fases visam acelerar o desenvolvimento de \textit{software}, desde a concepção inicial até a entrega ao usuário final.
+
+\begin{figure}[htb]%% Ambiente figure
+\captionsetup{width=0.9\textwidth}%% Largura da legenda
+\caption{The DevOps lifecycle}%% Legenda
+\label{fig:devops}%% Rótulo
+\includegraphics[width=0.9\textwidth]{devops-lifecycle.png}
+\fonte{\cite{Atlassian2025}}%% Fonte
+\end{figure}
+
+A Figura \ref{fig:devops} ilustra o ciclo de vida \textit{DevOps}, no qual as fases estão organizadas em um fluxo contínuo e iterativo. Conforme descrito pela \textit{Atlassian}\footnote{A Atlassian é uma empresa de \textit{software} conhecida por ferramentas como Jira, Confluence e Bitbucket.} \cite{Atlassian2025}, cada etapa desempenha um papel fundamental para viabilizar entregas ágeis e confiáveis, com ênfase na automação e na melhoria contínua. Essas fases estão interconectadas de forma cíclica, permitindo a evolução constante e a automatização progressiva dos processos.
+
+A seguir, detalhamos cada uma das fases representadas na figura:
+
+\begin{enumerate} 
+
+\item \textbf{Descoberta \textit{(Discover)}:} Antes do desenvolvimento, ocorre a análise e identificação de oportunidades e riscos, permitindo que as equipes entendam melhor o contexto do projeto e tomem decisões informadas.
+
+\item \textbf{Planejamento \textit{(Plan)}:} Corresponde ao momento em que as equipes definem as funcionalidades a serem implementadas, priorizando tarefas com base em metas estratégicas e necessidades do cliente.
+
+\item \textbf{Desenvolvimento \textit{(Build)}:} Nesta fase, o código é desenvolvido com o auxílio de sistemas de controle de versão, como o \textit{Git}\footnote{Git é um sistema de controle de versão distribuído amplamente utilizado para rastrear alterações no código-fonte durante o desenvolvimento de \textit{software}.}. A colaboração entre desenvolvedores é facilitada, e práticas como integração contínua \textit{(CI)} são aplicadas para garantir qualidade desde o início.
+
+\item \textbf{Testes \textit{(Test)}:} O código desenvolvido passa por testes automatizados para assegurar a estabilidade e qualidade do sistema. Essa etapa permite detectar falhas de forma precoce, reduzindo custos de correção.
+
+\item \textbf{Implantação \textit{(Deploy)}:} Utilizando práticas de entrega contínua \textit{(CD)}, as equipes automatizam a publicação de novas versões do \textit{software}. Para reduzir falhas e interrupções, são utilizadas técnicas de deploy gradual, que promovem uma transição mais segura entre versões e contribuem para a estabilidade do sistema.
+
+\item \textbf{Operações \textit{(Operate)}:} Esta fase envolve o gerenciamento da infraestrutura e dos serviços em produção, garantindo disponibilidade, desempenho e resiliência dos sistemas.
+
+\item \textbf{Monitoramento \textit{(Observe)}:} Ferramentas de monitoramento e análise de logs são utilizadas para acompanhar o funcionamento do sistema, identificar anomalias e embasar melhorias futuras.
+
+\item \textbf{Feedback Contínuo \textit{(Continuous Feedback)}:} Após a entrega, feedbacks de usuários e métricas de operação são analisados para retroalimentar o ciclo de desenvolvimento, gerando ajustes e novas melhorias.
+\end{enumerate}
+
+\section{CI (Integração Contínua)}
+
+CI é uma prática de desenvolvimento de \textit{software} que incentiva os desenvolvedores a integrar suas mudanças de código frequentemente em um repositório\footnote{Repositório é o local central onde o código-fonte de um projeto é armazenado e gerenciado, geralmente com suporte a controle de versão como \textit{Git}.}. Esse processo é geralmente automatizado para compilar, testar e verificar o código, ajudando a identificar e resolver erros rapidamente, sendo essencial para evitar problemas de integração e reduzir retrabalho, promovendo um desenvolvimento mais rápido e confiável. 
+
+%% TODO: adicionar um techo falando sobre ferramentas de analise estatica de codigo / container
+
+Verificar automaticamente cada \textit{commit} reduz o risco de falhas acumuladas e contribui para a melhoria da qualidade do \textit{software}. Para garantir a integridade das \textit{branches}\footnote{Branches são ramificações independentes dentro de um repositório, utilizadas para desenvolvimento paralelo e controle de versões.} principais, utiliza-se \textit{pipelines} com regras que exigem a aprovação em todos os testes unitários e de integração antes que qualquer alteração seja incorporada. Essa abordagem evita que código instável seja introduzido, assegurando a qualidade e a estabilidade do \textit{software}. Segundo \cite{Fowler2024}, práticas como essas são especialmente úteis em ambientes que adotam metodologias ágeis, pois facilitam a manutenção de versões consistentes e reduzem a introdução de falhas em produção.
+
+Além de aumentar a velocidade e a frequência das integrações, também contribui para um processo mais seguro e previsível, fornecendo um \textit{feedback} imediato sobre o impacto das mudanças realizadas. De acordo com Duvall, Matyas e Glover (2007) \cite{Duvall2007}, essa prática permite, através dos testes automatizados integrados na \textit{pipeline}, que equipes de desenvolvimento identifiquem problemas de forma incremental e continuada, resultando em um desenvolvimento menos propenso a falhas e com entregas mais consistentes \cite{Duvall2007}
+
+\section{CD (Entrega Contínua)}
+
+CD é uma prática de desenvolvimento de \textit{software} que automatiza a implantação de novas versões, garantindo que o \textit{software} esteja sempre pronto para ser atualizado de forma rápida e segura. Sucede a CI e assegura que cada versão aprovada nos testes automatizados possa ser implantada imediatamente em ambientes de produção ou homologação, minimizando a intervenção manual e reduzindo os riscos de falhas.
+
+De acordo com a Amazon Web Services\footnote{A \textit{AWS (Amazon Web Services)} é uma plataforma de serviços de computação em nuvem oferecida pela amplamente utilizada para desenvolvimento, hospedagem, automação e escalabilidade de aplicações.} em \cite{AWSCD2024}, a entrega contínua está alinhada com os princípios \textit{DevOps}, promovendo colaboração entre as equipes de desenvolvimento e operações para tornar o processo de implantação mais ágil e seguro. A automação reduz falhas humanas e aumenta a consistência das entregas, o que é fundamental para empresas que adotam práticas ágeis e ciclos frequentes de entrega.
+
+A Atlassian \cite{Atlassian2025} destaca que a \textit{CD} não só reduz o tempo entre a conclusão do desenvolvimento e a entrega de novos recursos, mas também melhora a velocidade na identificação e correção de erros. Isso permite que as equipes implementem rapidamente atualizações e correções, mantendo um ciclo de desenvolvimento contínuo e altamente responsivo.
+
+A entrega contínua se consolida como um pilar essencial para \textit{pipelines} modernas; sua adoção permite que equipes respondam com rapidez a demandas técnicas e de negócio, mantendo a qualidade e a confiabilidade das entregas. Dessa forma, a prática não apenas otimiza o fluxo de trabalho, mas também estabelece as bases para estratégias mais avançadas de implantação \cite{Humble2010}.
+
+\section{Relação entre Integração Contínua e Entrega Contínua}
+
+CI é um componente essencial para CD, pois prepara o \textit{software} para a entrega contínua, certificando que ele seja frequentemente integrado e testado. Enquanto CI foca na verificação constante de cada alteração de código, CD expande essa prática ao automatizar a disponibilização do \textit{software} em diferentes ambientes, como desenvolvimento, homologação e produção, garantindo que ele esteja tecnicamente apto para ser implantado a qualquer momento \cite{RedHat2025}. Essa relação sinérgica assegura um fluxo de desenvolvimento contínuo e altamente responsivo.
+
+É possível visualizar a relação intrínseca entre CI e CD na Figura \ref{fig:devops}, que ilustra um ciclo contínuo e iterativo de desenvolvimento e entrega de software. Este processo pode ser interpretado em fases interligadas:
+
+A porção esquerda do diagrama representa a CI, abrangendo os primeiros estágios do ciclo de desenvolvimento. O processo se inicia com o Planejamento (1), onde são definidos os requisitos, funcionalidades e objetivos do projeto. Em seguida, o código é Escrito (2) com base nesse planejamento. As alterações realizadas são então Compiladas (3) em uma versão executável e submetidas a Testes (4) automatizados. Esses testes garantem que as mudanças não introduzam falhas e que o código continue integrado e funcional. A CI, portanto, atua como um filtro de qualidade contínuo, validando o software a cada pequena alteração. Essa validação contínua é fundamental para que a entrega contínua possa ocorrer com segurança.
+
+A porção direita do diagrama representa a CD, que depende diretamente do sucesso da CI para automatizar a entrega e a operação do software. A CD só pode atuar com eficiência se tiver como base um software que foi corretamente integrado e testado previamente. Após a conclusão dos testes da CI, o software é empacotado para Lançamento (5), e então Implantado (6) nos ambientes de destino. As etapas seguintes incluem a Operação (7), onde o sistema é mantido ativo e monitorado, e o Monitoramento (8), que gera dados sobre o desempenho e uso da aplicação. Esses dados alimentam o ciclo de Feedback Contínuo, promovendo a melhoria contínua. Em suma, a CD depende da confiabilidade e estabilidade proporcionadas pela CI para garantir que as implantações sejam frequentes, automáticas e seguras.
+
+A forma do diagrama enfatiza a natureza cíclica e contínua do DevOps, onde CI e CD são elementos cruciais interligados. A colaboração e comunicação permeiam todo o ciclo, garantindo que as equipes trabalhem juntas de forma eficaz, enquanto o feedback contínuo permite a melhoria contínua do processo e do produto.
+
+\section{Esteira de \textit{CI/CD (Pipeline)}}\label{sec:pipelines}
+
+Uma esteira de \textit{CI/CD}, ou \textit{pipeline}, é uma série de etapas automatizadas que uma aplicação percorre desde a submissão do código até a implantação final em produção. Essa \textit{pipeline} é responsável por automatizar processos essenciais, como compilação, execução de testes, integração, revisão e implantação, formando um fluxo contínuo que acelera e padroniza o ciclo de desenvolvimento de \textit{software} \cite{Shahin2017}.
+
+A criação e configuração das \textit{pipelines} de \textit{CI/CD} geralmente são feitas por meio de arquivos de configuração escritos em formatos como \textit{YAML}, que permitem descrever as etapas e os comandos necessários em uma estrutura organizada e legível. Esses arquivos especificam os passos que o código deve seguir no processo de integração e entrega contínua, como executar testes unitários, compilar a aplicação, realizar verificações de segurança e, finalmente, implantar a aplicação em um ambiente de desenvolvimento, homologação e produção \cite{GetStartedWithGitLab}. 
+
+Para realizar essas etapas, a configuração das \textit{pipelines} muitas vezes incorpora comandos e scripts em Shell Script\footnote{Shell Script é um conjunto de comandos escritos em um interpretador de linha de comando (como Bash), utilizado para automatizar tarefas em sistemas operacionais Unix-like, como manipulação de arquivos, execução de programas e controle de fluxo.}, que são amplamente usados para manipular arquivos, configurar variáveis de ambiente, automatizar processos e controlar o comportamento das etapas no \textit{pipeline} \cite{GetStartedWithGitLab}. Esse nível de configuração detalhado permite que as \textit{pipelines} sejam altamente personalizáveis e adequadas às necessidades específicas de cada projeto, facilitando a adaptação das equipes a requisitos distintos e acelerando o ciclo de desenvolvimento \cite{Bass2020}.
+
+As \textit{Pipelines CI/CD} desempenham um papel crucial na organização e automação de todo o processo de entrega de \textit{software}, não apenas reduzem a intervenção manual, mas também promovem a consistência entre builds e implantações, minimizando erros e aumentando a confiança na entrega do \textit{software}. Essas \textit{pipelines} desempenham um papel central na metodologia \textit{DevOps}, uma vez que permitem a integração entre desenvolvimento e operações, melhorando a colaboração entre equipes e permitindo entregas rápidas e frequentes \cite{Humble2010}.
+
+\section{Arquivos de Configuração de \textit{Pipeline}}
+
+Os arquivos de configuração de \textit{pipeline} são documentos estruturados que definem o fluxo de execução automatizado de processos de integração e entrega contínua. Esses arquivos especificam tarefas como compilação, testes, deploy e outras etapas essenciais no desenvolvimento de \textit{software}. Através desses arquivos, as ferramentas de \textit{CI/CD} organizam e coordenam a execução automatizada do \textit{pipeline}.
+
+A maioria dessas ferramentas utiliza \textit{YAML} como formato de escrita para os arquivos de configuração. O \textit{YAML} é uma linguagem de serialização de dados que se destaca pela simplicidade, legibilidade e estrutura hierárquica baseada em indentação. Isso facilita a escrita e manutenção de \textit{pipelines}, permitindo que desenvolvedores descrevam de forma declarativa as etapas do fluxo de trabalho \cite{RedHat2023}.
+
+Conforme \cite{Bass2020}, a automação de \textit{pipelines} reduz erros humanos e melhora a eficiência dos processos de desenvolvimento. Além disso, Humble e Farley (2010) destacam que a configuração declarativa, como a oferecida pelo \textit{YAML}, promove reprodutibilidade e previsibilidade nas execuções, garantindo que os builds e deploys ocorram de maneira padronizada \cite{Humble2010}.
+
+Dessa forma, a adoção de arquivos de configuração de \textit{pipeline} escritos em \textit{YAML} tornou-se uma prática essencial em \textit{DevOps} e desenvolvimento moderno, possibilitando maior controle, automação e escalabilidade nos projetos.
+
+Exemplos práticos de arquivos de configuração em \textit{YAML} podem ser encontrados em seções posteriores deste trabalho, contemplando as ferramentas analisadas — \hyperref[codigo:codigoGithub]{GitHub Actions}, \hyperref[codigo:codigoGitlab]{GitLab CI/CD} e \hyperref[codigo:codigoJenkins]{Jenkins}. Nessas seções, são apresentados trechos reais de códigos utilizados para configuração de \textit{pipelines}.
+
+\section{Ferramentas de CI/CD}
+
+\subsection{GitHub Actions} \label{section:Github}
+
+O GitHub Actions é uma solução de automação integrada ao GitHub, lançada em 2018. Ele permite que desenvolvedores configurem \textit{pipelines} de CI/CD utilizando arquivos \textit{YAML} diretamente no repositório do projeto. Seu principal diferencial é a integração nativa com o GitHub, simplificando a configuração de fluxos de trabalho \cite{GitHubGettingStarted}.
+
+Com o GitHub Actions, é possível definir \textit{triggers} (eventos) para disparar ações automáticas, como testes unitários, \textit{build} (compilação) da aplicação e \textit{deploy} (implantação). O fluxo de trabalho é estruturado em \textit{jobs} (trabalhos), que contêm \textit{steps} (etapas) específicas para execução \cite{GitHubGettingStarted}.
+
+Uma das vantagens do GitHub Actions é a sua vasta biblioteca de ações reutilizáveis disponibilizadas no GitHub Marketplace, permitindo que os usuários aproveitem configurações pré-definidas para automação de tarefas sem necessidade de escrever \textit{scripts} do zero.
+
+No entanto, o GitHub Actions pode apresentar custos adicionais dependendo do uso de runners hospedados pelo próprio GitHub, o que pode ser um fator limitante para projetos maiores. Além disso, sua configuração, embora simplificada, pode ser menos flexível do que ferramentas como o Jenkins.
+
+\begin{sourcecode}[htb]
+\caption{\label{codigo:codigoGithub}Exemplo arquivo de configuração de \textit{pipeline} do GitHub}
+\begin{lstlisting}[frame=single, language=Java]
+name: Exemplo Trigger e Jobs
+
+on: # Trigger: Descreve quando executar a esteira
+  push:
+    branches:
+      - main
+
+jobs: # Jobs: Descreve as ações que a esteira executará
+  build-and-test: 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Compilar codigo
+      run: npm run build
+
+    - name: Testar codigo
+      run: npm run test
+\end{lstlisting}
+\fonte{}
+\end{sourcecode}
+
+A \hyperref[codigo:codigoGithub]{Figura 1} apresenta um exemplo de \textit{workflow} definido em um arquivo \textit{YAML} para automação com GitHub Actions. Esse fluxo de trabalho é acionado automaticamente sempre que ocorre um \textit{push}\footnote{Um \textit{push} é uma ação realizada no Git que envia as alterações no repositório local para o repositório remoto, atualizando-o com os novos \textit{commits}.} na branch main do repositório.
+
+O \textit{workflow} consiste em um único \textit{job}, chamado \textit{"build-and-test"}, que é executado no ambiente \textit{Ubuntu} na versão mais recente disponível. Esse \textit{job} é estruturado em três etapas principais, cada uma desempenhando uma função específica no processo de automação:
+
+\begin{enumerate}
+    \item \textit{Checkout} do código-fonte – Responsável por clonar o repositório para o ambiente de execução.
+    \item Compilação do código – Utiliza o comando \textit{npm run build} para processar a construção da aplicação.
+    \item Execução de testes – Roda a suíte de testes automatizados com \textit{npm run test}, garantindo que o código está funcionando corretamente.
+\end{enumerate}
+
+Como demonstrado na \hyperref[codigo:codigoGithub]{Figura 1}, o GitHub Actions permite configurar \textit{triggers} (eventos acionadores) que determinam quando um \textit{workflow} será executado. No exemplo, a execução ocorre sempre que um \textit{push} é feito na \textit{branch main}, mas é possível definir outros eventos, como \textit{pull requests}\footnote{\textit{Pull request} é uma solicitação para que alterações propostas em um repositório sejam revisadas e possivelmente incorporadas à branch principal, comum em repositórios baseados em Git.} ou execuções manuais, conforme a necessidade do projeto.
+
+Essa flexibilidade é essencial para otimizar o uso de recursos e garantir que a automação aconteça apenas quando necessário. Além disso, a configuração manual pode ser útil para cenários onde é exigida uma aprovação humana, como um \textit{deploy} em produção, assegurando um maior controle sobre o processo.
+
+\subsection{GitLab CI/CD} \label{section:Gitlab}
+
+O GitLab CI/CD é a solução de automação nativa do GitLab, lançada em 2015, que permite a criação e execução de \textit{pipelines} diretamente dentro da plataforma, utilizando arquivos \textit{YAML} armazenados no repositório. O GitLab CI/CD possibilita a definição de fluxos automatizados para tarefas como compilação, testes e implementação, garantindo maior eficiência no desenvolvimento de \textit{software} \cite{GetStartedWithGitLab}.
+
+Um dos grandes diferenciais do GitLab CI/CD é sua abordagem baseada em \textit{stages} (estágios), onde cada \textit{job} (trabalho) executa uma parte do \textit{pipeline} de forma organizada e sequencial \cite{GitlabSteps}. Além disso, a ferramenta oferece suporte a \textit{runners} dedicados, permitindo que os \textit{pipelines} sejam executados em servidores próprios ou na infraestrutura compartilhada do GitLab. Essa flexibilidade torna o GitLab CI/CD altamente escalável para projetos de diferentes tamanhos \cite{GitlabRunners}. 
+
+O ponto forte do GitLab CI/CD é a sua integração com o próprio GitLab, facilitando a configuração de \textit{pipelines} sem necessidade de ferramentas externas. A plataforma também disponibiliza \textit{templates} pré-configurados para diversas linguagens e \textit{frameworks}, agilizando a implementação de \textit{pipelines} personalizados para diferentes tipos de projetos.
+
+\begin{sourcecode}[H]
+\caption{\label{codigo:codigoGitlab}Exemplo arquivo de configuração de \textit{pipeline} do GitLab}
+\begin{lstlisting}[frame=single, language=Java]
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+build-job:
+  stage: build
+  image: node:18
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+test-job:
+  stage: test
+  image: node:18
+  script:
+    - npm test
+\end{lstlisting}
+\fonte{}
+\end{sourcecode}
+
+A \hyperref[codigo:codigoGitlab]{Figura 2} ilustra um exemplo de \textit{pipeline} no GitLab CI/CD, configurado para ser acionado automaticamente sempre que um push é feito na branch main. Esse \textit{pipeline} segue uma estrutura modular, garantindo organização, reutilização e escalabilidade no processo de integração e entrega contínua.
+
+\begin{enumerate}
+    \item Build da aplicação – O job build-job instala as dependências e executa npm run build, gerando a versão compilada do projeto.
+    \item Execução de testes – O job test-job executa npm test, validando a integridade do código antes de um possível deploy.
+\end{enumerate}
+
+Cada job pertence a um stage específico e só será executado quando todos os jobs do stage anterior forem concluídos com sucesso.
+
+O job build-job pertence ao stage build e será responsável por compilar a aplicação. Ele utiliza a imagem oficial do Node.js (versão 18) como ambiente de execução; após executar a compilação, armazena os arquivos gerados durante a execução do job para serem utilizados em estágios posteriores. Neste caso, a pasta dist/ (que contém os arquivos da build) será salva e disponibilizada para o próximo estágio.
+
+Essa esteira modular do GitLab CI/CD permite uma organização eficiente das etapas de automação, garantindo que a aplicação seja construída e testada de forma controlada. Essa abordagem modular e declarativa facilita a manutenção e escalabilidade dos \textit{pipelines}, permitindo que equipes de desenvolvimento automatizem seus fluxos de trabalho de maneira eficaz \cite{Fowler2024}.
+
+\subsection{Jenkins}  \label{section:Jenkins}
+
+O Jenkins é uma ferramenta de automação \textit{open-source} amplamente utilizada para integração e entrega contínua. Criado originalmente como parte de outro projeto, se tornou independente em 2011, se destaca por sua flexibilidade e extensibilidade, permitindo que equipes configurem \textit{pipelines} altamente personalizados para atender a diferentes cenários de desenvolvimento \cite{JenkinsDocumentation}.
+
+Diferente de soluções como GitHub Actions e GitLab CI/CD, que possuem uma integração nativa com suas respectivas plataformas, o Jenkins opera de forma autônoma, sendo possível utilizá-lo com qualquer provedor de repositório Git ou outra ferramenta de versionamento. Sua configuração pode ser feita tanto de forma declarativa utilizando arquivos \textit{YAML} ou \textit{Groovy} quanto de maneira imperativa, por meio da interface gráfica \cite{JenkinsPipelines}.
+
+Uma das maiores vantagens do Jenkins é a sua extensibilidade por meio de \textit{plugins}, com milhares de opções disponíveis atualmente, possibilitando integração com diversas tecnologias, como \textit{Docker}, \textit{Kubernetes}, bancos de dados, ferramentas de monitoramento e provedores de nuvem \cite{JenkinsPlugins}. Esse ecossistema expansível torna o Jenkins altamente adaptável a diferentes tipos de projetos.
+
+Além disso, o Jenkins permite a execução de \textit{pipelines} em agentes distribuídos, conhecidos como \textit{nodes}, possibilitando a escalabilidade horizontal da infraestrutura de CI/CD \cite{JenkinsAgents}. Essa abordagem é especialmente útil para grandes equipes e projetos complexos, onde múltiplos \textit{pipelines} podem ser executados simultaneamente, reduzindo o tempo de build e testes.
+
+Outro diferencial do Jenkins é a possibilidade de configurar \textit{pipelines} a partir de \textit{templates} pré-definidos, por meio do \textit{Jenkins Shared Libraries}. Com isso, empresas podem padronizar seus \textit{pipelines} e compartilhar lógica reutilizável entre diferentes projetos, promovendo consistência e eficiência na automação \cite{JenkinsSharedLibraries}.
+
+\begin{sourcecode}[H]
+\caption{\label{codigo:codigoJenkins}Exemplo arquivo de configuração de \textit{pipeline} do Jenkins usando Groove}
+\begin{lstlisting}[frame=single, language=Java]
+pipeline {
+    agent any 
+    stages {
+        stage('Build') {
+            steps {
+                checkout scm 
+                sh 'npm install'
+                sh 'npm run build'
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'dist/**', fingerprint: true
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+    }
+}
+\end{lstlisting}
+\fonte{}
+\end{sourcecode}
+
+Esse \textit{pipeline} também segue uma abordagem modular, onde os estágios são organizados sequencialmente para garantir um fluxo estruturado de \textit{build} e testes, assim como nas figuras 1 e 2.
+
+A estrutura do \textit{pipeline} no Jenkins permite um alto nível de personalização. Os agentes (definidos pela diretiva \textit{agent}) são responsáveis por executar as tarefas do \textit{pipeline}. No exemplo acima, o agente é configurado como \textit{any}, indicando que o \textit{pipeline} pode rodar em qualquer ambiente disponível. No entanto, é possível definir agentes específicos, como máquinas dedicadas ou contêineres \textit{Docker} \cite{JenkinsAgents}.
+
+Além disso, o uso de \textit{archiveArtifacts} permite armazenar os arquivos gerados no estágio de \textit{build} para serem reutilizados posteriormente \cite{JenkinsCore}. Isso é útil para \textit{pipelines} que envolvem múltiplas fases, como testes em ambientes distintos e \textit{deploy} em produção.
+
+Com sua abordagem flexível, escalável e altamente extensível, o Jenkins continua sendo uma das ferramentas mais robustas para \textit{CI/CD}. Ele permite integração com praticamente qualquer ferramenta do ecossistema \textit{DevOps}, oferecendo um nível avançado de personalização para equipes que buscam controle total sobre seus \textit{pipelines} \cite{JenkinsDocumentation}.
+
+\section{Benefícios e Desafios das Práticas de \textit{CI/CD}}
+
+A adoção de práticas de \textit{CI/CD} traz diversos benefícios, incluindo maior agilidade na entrega de \textit{software}, redução de riscos e melhoria na qualidade do produto final \cite{Shahin2017}. No entanto, também apresenta desafios, como a necessidade de uma mudança cultural dentro das equipes de desenvolvimento e a complexidade na configuração inicial das ferramentas. \cite{RiunguKalliosaari2016} enfatizam a importância de entender esses desafios para garantir uma transição bem-sucedida para práticas de \textit{DevOps}.
+
+\subsection{Benefícios detalhados}
+
+• Entrega Rápida e Frequente: A automação de compilação, testes e implantação permite que o software seja entregue aos usuários de forma mais rápida e com maior frequência. Isso acelera o ciclo de \textit{feedback} e permite que novas funcionalidades e correções sejam disponibilizadas prontamente. A CD, por exemplo, garante que o \textit{software} esteja sempre pronto para implantação, possibilitando lançamentos frequentes e previsíveis \cite{AWSCD2024}. 
+
+• Melhoria da Qualidade do Software: A integração frequente e os testes automatizados garantem que as alterações de código sejam continuamente verificadas e testadas. Isso minimiza riscos ao detectar erros precocemente, assegurando a estabilidade e a qualidade do software através de validações constantes a cada commit \cite{AWSCI2024}. A identificação e correção de erros tornam-se mais ágeis e frequentes.
+
+• Redução de Riscos: Ao validar o código em pequenas partes e de forma contínua, as falhas são detectadas e corrigidas antes que se propaguem e se tornem mais complexas e caras de resolver \cite{Fowler2024}. Isso reduz o risco de introduzir código instável em ambientes de produção. A automação também minimiza erros humanos inerentes a processos manuais de implantação.
+
+• Colaboração Aprimorada: As práticas de CI/CD promovem uma maior colaboração entre as equipes de desenvolvimento e operações (\textit{DevOps}), alinhando objetivos e fortalecendo a cultura organizacional. O feedback contínuo e a transparência dos processos incentivam a comunicação e a responsabilidade compartilhada \cite{RedHat2025}.
+
+• Consistência e Reprodutibilidade: As pipelines de CI/CD padronizam a execução de todas as etapas do desenvolvimento, como compilação, testes e implantação. Isso garante que os builds e deploys ocorram de maneira padronizada, promovendo reprodutibilidade e previsibilidade nas execuções \cite{Humble2010}.
+
+\subsection{Desafios associados}
+
+• Mudança Cultural: Um dos maiores desafios é a necessidade de uma transformação cultural profunda dentro das organizações. As equipes precisam abandonar silos tradicionais e adotar uma mentalidade de colaboração, confiança e responsabilidade compartilhada \cite{Samantha2018}.
+
+• Manutenção Contínua: As pipelines e a infraestrutura de CI/CD podem exigir manutenção contínua e atualização, o que pode ser um recurso intensivo. A complexidade aumenta com o tamanho do projeto e o número de integrações.
+
+• Segurança: A automação de todo o ciclo de entrega de software exige uma atenção redobrada à segurança, descartando a ideia de que a segurança é uma fase distinta e, em vez disso, garantindo que seja uma parte inerente do ciclo de vida de entrega do software. É crucial integrar práticas de \textit{DevSecOps}\footnote{\textit{DevSecOps} é uma abordagem que integra segurança em todas as fases do ciclo de vida de desenvolvimento de software, desde o planejamento e codificação até a implantação e operação, visando automatizar e incorporar práticas de segurança de forma contínua.} nas pipelines para que vulnerabilidades sejam detectadas e mitigadas precocemente, reduzindo riscos ao longo do desenvolvimento e da implantação \cite{PaloAltoNetworksCICDSecurity}.
+
+• Seleção da Ferramenta Adequada: Diante da diversidade de ferramentas de CI/CD disponíveis no mercado, as equipes enfrentam um desafio significativo ao tomar decisões sobre qual solução adotar. A escolha da solução mais adequada depende de múltiplos fatores, como a facilidade de configuração, a escalabilidade necessária, o suporte à personalização e a integração com o ecossistema tecnológico já existente da equipe. Avaliar essas características e ponderar os pontos fortes e limitações de cada ferramenta requer um entendimento aprofundado e pode influenciar diretamente a eficiência do fluxo de trabalho e a otimização dos recursos do projeto \cite{GitlabHowToChoose}.
